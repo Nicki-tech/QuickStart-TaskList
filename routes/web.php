@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Task\TaskController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 
 Route::group(['middleware' => ['web']], function () {
     Route::get('/', function () {
@@ -15,4 +16,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('dashboard', [AuthController::class, 'dashboard']);
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
     Route::resource('tasks', TaskController::class);
+
+    Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
+    Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
+    Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
+    Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 });
